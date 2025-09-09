@@ -26,6 +26,8 @@ def return_number_columns(letter):
     dict = {printable[10:20][i]: i for i in range(10)}
     return dict[letter]
     
+def check_winner(matrix, row, column):
+    return False
 
 def ask_for_move():
     move = input("Сделайте следующий ход: ")
@@ -35,9 +37,13 @@ def ask_for_move():
         print("Вы ввели неправильные координаты. Попробуйте еще раз.")
         return ask_for_move()
 
-    if (not letter or not digit) or (letter < "a" or letter > "j") or (digit < 1 or digit > 10) or (matrix[digit - 1][return_number_columns(letter)] == 1): # нужно добавить проверку занята ли уже клетка которую выбирает игрок
-        print("Вы ввели неправильные координаты. Попробуйте еще раз.")
-        return ask_for_move()
+    if (not letter or not digit) or (letter < "a" or letter > "j") or (digit < 1 or digit > 10) or (matrix[digit - 1][return_number_columns(letter)] == 1):
+        if matrix[digit - 1][return_number_columns(letter)] == 1:
+            print("Данная ячейка уже занята. Попробуйте еще раз")
+            return ask_for_move()
+        else:
+            print("Вы ввели неправильные координаты. Попробуйте еще раз.")
+            return ask_for_move()
     else:
         return digit, letter
     
@@ -47,7 +53,15 @@ print_matrix(matrix)
 print(print_rules())
 
 while True:
-    digit, letter = ask_for_move()
-    matrix[digit - 1][return_number_columns(letter)] = 1
+    row_number, letter = ask_for_move()
+    column_number = return_number_columns(letter)
+    
+    matrix[row_number - 1][column_number] = 1
+    
+    if check_winner(matrix, row_number, column_number):
+        print("Вы победили")
+        break
     
     print_matrix(matrix)
+    
+    
