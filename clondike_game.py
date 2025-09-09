@@ -1,6 +1,5 @@
 from string import printable
 
-
 def print_rules():
     return """
 Игра ведётся на игровом поле размером 10 на 10 клеток. 
@@ -29,6 +28,19 @@ def return_number_columns(letter):
 def check_winner(matrix, row, column):
     return False
 
+def check_board_full(matrix):
+    for i in range(len(matrix)):
+        for j in range(len(matrix[i])):
+            if matrix[i][j] == 0:
+                return False
+    return True
+
+def change_move(player):
+    if player == 1:
+        return 0
+    else:
+       return 1
+
 def ask_for_move():
     move = input("Сделайте следующий ход: ")
     try:
@@ -48,11 +60,19 @@ def ask_for_move():
         return digit, letter
     
 matrix = create_matrix()
+player = 0
 print_matrix(matrix)
 
 print(print_rules())
 
+name_first = input("Введите имя первого игрока: ")
+name_second = input("Введите имя второго игрока: ")
+
 while True:
+    if player == 0:
+        print(f"Ход игрока под именем {name_first}")
+    else:
+        print(f"Ход игрока под именем {name_second}")
     row_number, letter = ask_for_move()
     column_number = return_number_columns(letter)
     
@@ -62,6 +82,10 @@ while True:
         print("Вы победили")
         break
     
+    if check_board_full(matrix):
+        print("Ничья")
+    
     print_matrix(matrix)
+    player = change_move(player)
     
     
