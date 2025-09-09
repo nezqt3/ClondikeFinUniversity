@@ -1,5 +1,15 @@
 from string import printable
 
+def print_rules():
+    return """
+Игра ведётся на игровом поле размером 10 на 10 клеток. 
+Игроки по очереди выставляют в любую свободную клетку по отметке, и тот игрок, 
+после чьего хода получилась цепочка длиной хотя бы в три отметки, проигрывает. 
+При этом в цепочке считаются как свои отметки, так и отметки соперника, у игровых 
+фишек как бы нет хозяина. Цепочка — это ряд фишек, следующая фишка в котором примыкает к 
+предыдущей с любого из восьми направлений.
+    """
+
 def print_matrix(matrix):
     print("  ", *printable[10:20])
     for i in range(len(matrix)):
@@ -31,6 +41,9 @@ def ask_for_move():
         return digit, letter
     
 matrix = create_matrix()
+print_matrix(matrix)
 
-digit, letter = ask_for_move()
-print(return_number_columns(letter))
+print(print_rules())
+
+while True:
+    pass
