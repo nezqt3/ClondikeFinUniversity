@@ -13,11 +13,15 @@ def create_matrix():
 
 def ask_for_move():
     move = input("Сделайте следующий ход: ")
-    letter = "".join([ch for ch in move if ch.isalpha()])
-    digit = int("".join([ch for ch in move if ch.isdigit()]))
+    try:
+        digit, letter = int(move.split()[0]), move.split()[1]
+    except:
+        print("Вы ввели неправильные координаты. Попробуйте еще раз.")
+        return ask_for_move()
 
     if (not letter or not digit) or (letter < "a" or letter > "j") or (digit < 1 or digit > 10): # нужно добавить проверку занята ли уже клетка которую выбирает игрок
-        return None
+        print("Вы ввели неправильные координаты. Попробуйте еще раз.")
+        return ask_for_move()
     else:
         return digit, letter
     
@@ -25,5 +29,5 @@ matrix = create_matrix()
 
 print_matrix(matrix)
 
-while True:
-    pass
+for i in range(5):
+    print(ask_for_move())
