@@ -13,7 +13,7 @@ def ask_for_move():
     letter = "".join([ch for ch in move if ch.isalpha()])
     digit = int("".join([ch for ch in move if ch.isdigit()]))
 
-    if (not letter or not digit) or (letter < "a" or letter > "j") or (digit < 1 or digit > 10): # нужно добавить проверку занята ли уже клетка которую выбирает игрок
+    if (not letter or not digit) or (letter < "a" or letter > "j") or (digit < 1 or digit > 10) or (len(move) != 2 or (len(move)!= 3 and digit == 10)): # нужно добавить проверку занята ли уже клетка которую выбирает игрок
         print("Вы ввели неправильные координаты. Попробуйте еще раз.")
         ask_for_move()
     else:
