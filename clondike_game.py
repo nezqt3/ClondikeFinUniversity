@@ -1,5 +1,6 @@
 from string import printable
 
+
 def print_rules():
     return """
 Игра ведётся на игровом поле размером 10 на 10 клеток. 
@@ -34,7 +35,7 @@ def ask_for_move():
         print("Вы ввели неправильные координаты. Попробуйте еще раз.")
         return ask_for_move()
 
-    if (not letter or not digit) or (letter < "a" or letter > "j") or (digit < 1 or digit > 10): # нужно добавить проверку занята ли уже клетка которую выбирает игрок
+    if (not letter or not digit) or (letter < "a" or letter > "j") or (digit < 1 or digit > 10) or (matrix[digit - 1][return_number_columns(letter)] == 1): # нужно добавить проверку занята ли уже клетка которую выбирает игрок
         print("Вы ввели неправильные координаты. Попробуйте еще раз.")
         return ask_for_move()
     else:
@@ -46,4 +47,7 @@ print_matrix(matrix)
 print(print_rules())
 
 while True:
-    pass
+    digit, letter = ask_for_move()
+    matrix[digit - 1][return_number_columns(letter)] = 1
+    
+    print_matrix(matrix)
