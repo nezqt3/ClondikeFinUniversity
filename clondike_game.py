@@ -11,6 +11,11 @@ def print_matrix(matrix):
 def create_matrix():
     return [[0] * 10 for _ in range(10)]
 
+def return_number_columns(letter):
+    dict = {printable[10:20][i]: i for i in range(10)}
+    return dict[letter]
+    
+
 def ask_for_move():
     move = input("Сделайте следующий ход: ")
     try:
@@ -27,7 +32,5 @@ def ask_for_move():
     
 matrix = create_matrix()
 
-print_matrix(matrix)
-
-for i in range(5):
-    print(ask_for_move())
+digit, letter = ask_for_move()
+print(return_number_columns(letter))
