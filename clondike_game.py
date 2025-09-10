@@ -77,11 +77,13 @@ def ask_for_move() -> tuple: # функция для запроса хода и�
             return ask_for_move()
     else:
         return digit, letter # возвращаем кортеж с 2 кооординатами
-    
+
+
+
 matrix = create_matrix()
 player = 0
-print_matrix(matrix)
 
+print_matrix(matrix)
 print(print_rules())
 
 name_first = input("Введите имя первого игрока: ")
