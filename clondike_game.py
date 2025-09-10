@@ -61,7 +61,13 @@ def change_move(player) -> int:
 def ask_for_move() -> tuple:
     move = input("Сделайте следующий ход: ")
     try:
-        digit, letter = int(move.split()[0]), move.split()[1]
+        letter = "".join([ch for ch in move if ch.isalpha()])
+        digit = int("".join([ch for ch in move if ch.isdigit()]))
+        if len(letter)==1 and (len(str(digit))==1 or digit == 10):
+            pass
+        else:
+            print("Вы ввели неправильные координаты. Попробуйте еще раз.")
+            return ask_for_move()
     except:
         print("Вы ввели неправильные координаты. Попробуйте еще раз.")
         return ask_for_move()
