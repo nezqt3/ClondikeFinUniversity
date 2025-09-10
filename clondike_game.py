@@ -26,7 +26,16 @@ def return_number_columns(letter):
     return dict[letter]
     
 def check_winner(matrix, row, column):
-    return False
+    moves = [
+        [-1, -1], [-1, 0], [-1, 1],
+        [0, -1], [0, 1],
+        [1, -1],  [1, 0],  [1, 1],
+    ]
+    for i in moves:
+        # print(matrix[row + i[0] - 1][column + i[1]], matrix[row + i[0] * 2 - 1][column + i[1] * 2], end="/")
+        if matrix[row + i[0] - 1][column + i[1]] == 1:
+            if matrix[row + i[0] * 2 - 1][column + i[1] * 2] == 1:
+                return True
 
 def check_board_full(matrix):
     for i in range(len(matrix)):
@@ -69,23 +78,24 @@ name_first = input("Введите имя первого игрока: ")
 name_second = input("Введите имя второго игрока: ")
 
 while True:
-    if player == 0:
-        print(f"Ход игрока под именем {name_first}")
-    else:
-        print(f"Ход игрока под именем {name_second}")
+    current_name = name_first if player == 0 else name_second
+    print(f"Ход игрока под именем {current_name}")
+    
     row_number, letter = ask_for_move()
     column_number = return_number_columns(letter)
     
     matrix[row_number - 1][column_number] = 1
     
+    print_matrix(matrix)
+    
     if check_winner(matrix, row_number, column_number):
-        print("Вы победили")
+        print(f"Игрок {current_name} выйграл")
         break
     
     if check_board_full(matrix):
         print("Ничья")
-    
-    print_matrix(matrix)
+        break
+
     player = change_move(player)
     
     
