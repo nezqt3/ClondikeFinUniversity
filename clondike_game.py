@@ -41,6 +41,8 @@ def check_winner(matrix, row, column) -> bool:
     if row == 9:
         if column == 9:
             return search_needable_elements([[-1, -1], [-1, 0], [0, -1]], row, column, matrix)
+        elif column == 0:
+            return search_needable_elements([[0, -1], [0, 1], [-1, 1]], row, column, matrix)
         else:
             return search_needable_elements([[-1, -1], [-1, 0], [0, -1], [0, 1], [-1, 1]], row, column, matrix)
     elif column == 9:
