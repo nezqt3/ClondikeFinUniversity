@@ -54,21 +54,21 @@ def change_move(player) -> int:
     else:
        return 1
 
-def ask_for_move() -> tuple:
+def ask_for_move() -> tuple: # функция для запроса хода игрока
     move = input("Сделайте следующий ход: ")
     try:
-        letter = "".join([ch for ch in move if ch.isalpha()])
-        digit = int("".join([ch for ch in move if ch.isdigit()]))
-        if len(letter)==1 and (len(str(digit))==1 or digit == 10):
+        letter = "".join([ch for ch in move if ch.isalpha()]) # с помощью генератора находим букву в любой позиции
+        digit = int("".join([ch for ch in move if ch.isdigit()])) # аналогично с буквой
+        if len(letter)==1 and (len(str(digit))==1 or digit == 10): # первичная проверка ввода
             pass
         else:
             print("Вы ввели неправильные координаты. Попробуйте еще раз.")
-            return ask_for_move()
+            return ask_for_move() # при неправильных координатах заново вызываем функцию запрашивающую ход
     except:
         print("Вы ввели неправильные координаты. Попробуйте еще раз.")
         return ask_for_move()
 
-    if (not letter or not digit) or (letter < "a" or letter > "j") or (digit < 1 or digit > 10) or (matrix[digit - 1][return_number_columns(letter)] == 1):
+    if (not letter or not digit) or (letter < "a" or letter > "j") or (digit < 1 or digit > 10) or (matrix[digit - 1][return_number_columns(letter)] == 1): # вторичная проверка ввода включающая в себя проверку занята ли клетка
         if matrix[digit - 1][return_number_columns(letter)] == 1:
             print("Данная ячейка уже занята. Попробуйте еще раз")
             return ask_for_move()
@@ -76,7 +76,7 @@ def ask_for_move() -> tuple:
             print("Вы ввели неправильные координаты. Попробуйте еще раз.")
             return ask_for_move()
     else:
-        return digit, letter
+        return digit, letter # возвращаем кортеж с 2 кооординатами
     
 matrix = create_matrix()
 player = 0
