@@ -1,6 +1,6 @@
 from string import printable
 
-def print_rules():
+def print_rules() -> str:
     return """
 Игра ведётся на игровом поле размером 10 на 10 клеток. 
 Игроки по очереди выставляют в любую свободную клетку по отметке, и тот игрок, 
@@ -10,7 +10,7 @@ def print_rules():
 предыдущей с любого из восьми направлений.
     """
 
-def print_matrix(matrix):
+def print_matrix(matrix) -> None:
     print("  ", *printable[10:20])
     for i in range(len(matrix)):
         if i == 9:
@@ -18,24 +18,32 @@ def print_matrix(matrix):
         else:
             print(i + 1, "", *matrix[i])
         
-def create_matrix():
+def create_matrix() -> list:
     return [[0] * 10 for _ in range(10)]
 
-def return_number_columns(letter):
+def return_number_columns(letter) -> dict:
     dict = {printable[10:20][i]: i for i in range(10)}
     return dict[letter]
-    
-def check_winner(matrix, row, column):
+
+def search_needable_elements(moves, row, column) -> bool:
+    for i in moves:
+        if matrix[row + i[0]][column + i[1]] == 1:
+            if matrix[row + i[0] * 2][column + i[1] * 2] == 1:
+                return True
+    return False
+
+def check_winner(matrix, row, column) -> bool:
     moves = [
         [-1, -1], [-1, 0], [-1, 1],
         [0, -1], [0, 1],
         [1, -1],  [1, 0],  [1, 1],
     ]
-    for i in moves:
-        # print(matrix[row + i[0] - 1][column + i[1]], matrix[row + i[0] * 2 - 1][column + i[1] * 2], end="/")
-        if matrix[row + i[0] - 1][column + i[1]] == 1:
-            if matrix[row + i[0] * 2 - 1][column + i[1] * 2] == 1:
-                return True
+    if row == 9:
+        return search_needable_elements(moves[:5], row, column)
+    elif column == 9:
+        return search_needable_elements([[-1, -1], [-1, 0], [0, -1], [1, -1], [1, 0]], row, column)
+    else:
+        return search_needable_elements(moves, row, column)
 
 def check_board_full(matrix):
     for i in range(len(matrix)):
@@ -44,13 +52,13 @@ def check_board_full(matrix):
                 return False
     return True
 
-def change_move(player):
+def change_move(player) -> int:
     if player == 1:
         return 0
     else:
        return 1
 
-def ask_for_move():
+def ask_for_move() -> tuple:
     move = input("Сделайте следующий ход: ")
     try:
         digit, letter = int(move.split()[0]), move.split()[1]
@@ -88,7 +96,7 @@ while True:
     
     print_matrix(matrix)
     
-    if check_winner(matrix, row_number, column_number):
+    if check_winner(matrix, row_number - 1, column_number):
         print(f"Игрок {current_name} выйграл")
         break
     
