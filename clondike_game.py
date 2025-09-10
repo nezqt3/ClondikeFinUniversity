@@ -27,9 +27,10 @@ def return_number_columns(letter) -> dict:
 
 def search_needable_elements(moves, row, column, matrix) -> bool:
     for i in moves:
-        if matrix[row + i[0]][column + i[1]] == 1:
-            if matrix[row + i[0] * 2][column + i[1] * 2] == 1:
-                return True
+        if row + i[0] * 2 <= 9 and column + i[1] * 2 <= 9 and row + i[0] * 2 >= 0 and column + i[1] * 2 >= 0:
+            if matrix[row + i[0]][column + i[1]] == 1:
+                if matrix[row + i[0] * 2][column + i[1] * 2] == 1:
+                    return True
     return False
 
 def check_winner(matrix, row, column) -> bool:
@@ -38,17 +39,7 @@ def check_winner(matrix, row, column) -> bool:
         [0, -1], [0, 1],
         [1, -1],  [1, 0],  [1, 1],
     ]
-    if row == 9:
-        if column == 9:
-            return search_needable_elements([[-1, -1], [-1, 0], [0, -1]], row, column, matrix)
-        elif column == 0:
-            return search_needable_elements([[0, -1], [0, 1], [-1, 1]], row, column, matrix)
-        else:
-            return search_needable_elements([[-1, -1], [-1, 0], [0, -1], [0, 1], [-1, 1]], row, column, matrix)
-    elif column == 9:
-        return search_needable_elements([[-1, -1], [-1, 0], [0, -1], [1, -1], [1, 0]], row, column, matrix)
-    else:
-        return search_needable_elements(moves, row, column, matrix)
+    return search_needable_elements(moves, row, column, matrix)
 
 def check_board_full(matrix):
     for i in range(len(matrix)):
