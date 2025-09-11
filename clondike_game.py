@@ -78,8 +78,6 @@ def ask_for_move() -> tuple:
     else:
         return digit, letter
 
-
-
 matrix = create_matrix()
 player = 0
 
